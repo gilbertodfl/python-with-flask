@@ -22,7 +22,11 @@ def contato():
 @app.route("/usuarios")
 def usuarios():
     return render_template('usuarios.html', lista_usuarios=lista_usuarios)
-@app.route("/login")
+
+## Observe que por padrão o get é o método aceito por uma rota.
+## Para aceitar o post, é necessário especificar o parâmetro methods na rota.
+
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     form_login = FormLogin()
     form_criar_conta = FormCriarConta()

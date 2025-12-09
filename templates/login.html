@@ -1,20 +1,46 @@
 {% extends "base.html" %}
 {% block body %}
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Login</h1>
-            {{ form_login.email.label }} {{ form_login.email(size=32) }}<br>
-            {{ form_login.password.label }} {{ form_login.password(size=32) }}<br>
-            {{ form_login.botao_submit_login() }}
+    <h1>Faça Login ou crie sua conta</h1>
+    <hr>
+    <div class="row ">
+
+        <div class="col ">
+            <form method="POST" action="" class="border p-4 mt-2 ps-5 pb-5">
+                <legend>Login</legend>
+                <fieldset>
+                    <div class="form-group">
+                            {{ form_login.email.label(class="form-control-label") }} {{ form_login.email(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_login.password.label(class="form-control-label") }} {{ form_login.password(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_login.remember_me.label(class="form-check-label") }} {{ form_login.remember_me(class="form-check-input") }}
+                    </div>
+                </fieldset>
+                {{ form_login.botao_submit_login(class="btn btn-primary mt-2") }}
+            </form>
         </div>
         <div class="col">
-                <h1>Criar conta</h1>
-                {{ form_criar_conta.username.label }} {{ form_criar_conta.username(size=32) }}<br>
-                {{ form_criar_conta.email.label }} {{ form_criar_conta.email(size=32) }}<br>
-                {{ form_criar_conta.password.label }} {{ form_criar_conta.password(size=32) }}<br>
-                {{ form_criar_conta.checkpassword.label }} {{ form_criar_conta.checkpassword(size=32) }}<br>
-                {{ form_criar_conta.botao_submit_criar_conta() }}
+            <form method="POST" action="" class="border p-4 mt-2 ps-5 pb-5" >  
+                <legend>Criar conta</legend>
+                  <fieldset>
+                    <div class="form-group">
+                    {{ form_criar_conta.username.label(class="form-control-label") }} {{ form_criar_conta.username(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_criar_conta.email.label(class="form-control-label") }} {{ form_criar_conta.email(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_criar_conta.password.label(class="form-control-label") }} {{ form_criar_conta.password(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_criar_conta.checkpassword.label(class="form-control-label") }} {{ form_criar_conta.checkpassword(class="form-control") }}
+                    </div>
+                  </fieldset>
+                {{ form_criar_conta.botao_submit_criar_conta(class="btn btn-primary mt-2") }}
+            </form>
         </div>
 </div>
  {% endblock %}
