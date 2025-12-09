@@ -8,7 +8,13 @@ source .venv/bin/activate
 
 
 
-RODAR O PROJETO:
+## RODAR O PROJETO:
 
 flask --app main.py --debug run
 
+
+## criando formulários - flask-wtf
+
+flask_wtf: usado para criar formulários no python. 
+
+pip instal flask-wtf

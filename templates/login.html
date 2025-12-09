@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Login</h1>
+            {{ form_login.email.label }} {{ form_login.email(size=32) }}<br>
+            {{ form_login.password.label }} {{ form_login.password(size=32) }}<br>
+            {{ form_login.botao_submit_login() }}
+        </div>
+        <div class="col">
+                <h1>Criar conta</h1>
+                {{ form_criar_conta.username.label }} {{ form_criar_conta.username(size=32) }}<br>
+                {{ form_criar_conta.email.label }} {{ form_criar_conta.email(size=32) }}<br>
+                {{ form_criar_conta.password.label }} {{ form_criar_conta.password(size=32) }}<br>
+                {{ form_criar_conta.checkpassword.label }} {{ form_criar_conta.checkpassword(size=32) }}<br>
+                {{ form_criar_conta.botao_submit_criar_conta() }}
+        </div>
+</div>
+ {% endblock %}
