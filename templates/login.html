@@ -11,10 +11,17 @@
                 <legend>Login</legend>
                 <fieldset>
                     <div class="form-group">
-                            {{ form_login.email.label(class="form-control-label") }} {{ form_login.email(class="form-control") }}
+                            {{ form_login.email.label(class="form-control-label") }} {{ form_login.email(class="form-control is-invalid") }}
+                            {% for erro in form_login.email.errors %}
+                                <div class="invalid-feedback">{{ erro }}</div>
+                            {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ form_login.password.label(class="form-control-label") }} {{ form_login.password(class="form-control") }}
+                        {{ form_login.password.label(class="form-control-label") }} {{ form_login.password(class="form-control is-invalid") }}
+                        {% for erro in form_login.password.errors %}
+                           <div class="invalid-feedback">{{ erro }}</div>
+                        {% endfor %}
+
                     </div>
                     <div class="form-group">
                         {{ form_login.remember_me.label(class="form-check-label") }} {{ form_login.remember_me(class="form-check-input") }}
@@ -29,16 +36,28 @@
                 <legend>Criar conta</legend>
                   <fieldset>
                     <div class="form-group">
-                    {{ form_criar_conta.username.label(class="form-control-label") }} {{ form_criar_conta.username(class="form-control") }}
+                    {{ form_criar_conta.username.label(class="form-control-label") }} {{ form_criar_conta.username(class="form-control is-invalid") }}
+                       {% for erro in form_criar_conta.username.errors %}
+                           <div class="invalid-feedback">{{ erro }}</div>
+                        {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ form_criar_conta.email.label(class="form-control-label") }} {{ form_criar_conta.email(class="form-control") }}
+                        {{ form_criar_conta.email.label(class="form-control-label") }} {{ form_criar_conta.email(class="form-control is-invalid") }}
+                         {% for erro in form_criar_conta.email.errors %}
+                           <div class="invalid-feedback">{{ erro }}</div>
+                        {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ form_criar_conta.password.label(class="form-control-label") }} {{ form_criar_conta.password(class="form-control") }}
+                        {{ form_criar_conta.password.label(class="form-control-label") }} {{ form_criar_conta.password(class="form-control is-invalid") }}
+                        {% for erro in form_criar_conta.password.errors %}
+                           <div class="invalid-feedback">{{ erro }}</div>
+                        {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{ form_criar_conta.checkpassword.label(class="form-control-label") }} {{ form_criar_conta.checkpassword(class="form-control") }}
+                        {{ form_criar_conta.checkpassword.label(class="form-control-label") }} {{ form_criar_conta.checkpassword(class="form-control is-invalid") }}
+                        {% for erro in form_criar_conta.checkpassword.errors %}
+                           <div class="invalid-feedback">{{ erro }}</div>
+                        {% endfor %}
                     </div>
                   </fieldset>
                 {{ form_criar_conta.botao_submit_criar_conta(class="btn btn-primary mt-2") }}

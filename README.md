@@ -49,6 +49,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 exit
 ```
 vamos colocar essa chave no main.py
+
 Como é ambiente de teste, não tem problema publicar aqui:
 
 ```
@@ -79,4 +80,4 @@ def login():
         return ( redirect(url_for('home')) )
     return render_template('login.html', form_login=form_login, form_criar_conta=form_criar_conta)
 ```    
-Para entender melho leia o arquivo base.html
+Para entender melhor leia o arquivo base.html
