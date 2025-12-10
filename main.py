@@ -1,5 +1,7 @@
 from flask import Flask, render_template, url_for, request, flash, redirect
 from forms import FormCriarConta, FormLogin
+from flask_sqlalchemy import SQLAlchemy
+
 ## https://flask-wtf.readthedocs.io/en/stable/
 
 ## https://flask.palletsprojects.com/en/stable/
@@ -9,6 +11,11 @@ app = Flask(__name__)
 lista_usuarios = [ 'gilberto', 'samuel', 'joão' ]
 
 app.config['SECRET_KEY'] ='84741a09e5e38f33ac7410686aa03a5d'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+## create the SQLAlchemy db instance
+db = SQLAlchemy(app)
+    
 
 
 @app.route("/")
