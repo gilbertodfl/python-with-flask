@@ -14,3 +14,20 @@ class FormLogin(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6,max=20)])
     remember_me = BooleanField('Remember Me')    
     botao_submit_login = SubmitField('Login')    
+
+    # caso queira as mensagens em portguês, poderia usar o exemplo abaixo:
+    #   validators=[
+    #         DataRequired(message='Por favor, preencha o nome de usuário.')
+    #     ])
+    
+    # email = StringField('Email', 
+    #     validators=[
+    #         DataRequired(message='Por favor, preencha o email.'),
+    #         Email(message='Email inválido. Digite um email válido.')
+    #     ])
+    
+    # password = PasswordField('Password', 
+    #     validators=[
+    #         DataRequired(message='Por favor, preencha a senha.'),
+    #         Length(min=6, max=20, message='A senha deve ter entre 6 e 20 caracteres.')
+    #     ])
