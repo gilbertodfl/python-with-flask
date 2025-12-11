@@ -4,6 +4,7 @@ from flask import Flask
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 ## https://flask-wtf.readthedocs.io/en/stable/
 
@@ -17,6 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 ## create the SQLAlchemy db instance
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
 
 ## as rotas e modelos foram movidos para o pacote myposts
 ## precisam ser chamadas logo após a criação do app Flask

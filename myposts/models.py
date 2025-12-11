@@ -1,10 +1,14 @@
-from myposts import db as database
+from myposts import db as database, login_manager
+from flask_login import UserMixin
 #from __init__ import db as database
 #from . import db as database
-
 from datetime import datetime
 
-class Usuario(database.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return Usuario.query.get(int(user_id))
+
+class Usuario(database.Model, UserMixin):
     id = database.Column(database.Integer, primary_key=True)
     username = database.Column(database.String, nullable=False)
     email = database.Column(database.String, nullable=False, unique=True)
