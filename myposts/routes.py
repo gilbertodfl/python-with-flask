@@ -35,8 +35,12 @@ def login():
             ## o login_user vem do flask_login e vai gerenciar a sessão do usuário. Inclusive cookies se "remember me" for marcado.
             login_user(usuario, remember=form_login.remember_me.data)
             flash(f'Login realizado com sucesso!{form_login.email.data}', 'alert-success')
-        ##print(f'Login com o email: {form_login.email.data} e senha: {form_login.password.data} e lembrar de mim: {form_login.remember_me.data}')
-            return ( redirect(url_for('home')) )
+            ##print(f'Login com o email: {form_login.email.data} e senha: {form_login.password.data} e lembrar de mim: {form_login.remember_me.data}')
+            par_next = request.args.get('next')
+            if par_next:
+                return ( redirect(par_next) )
+            else:   
+                return ( redirect(url_for('home')) )
         else:
             flash('Falha no login. Email ou senha incorretos.', 'alert-danger')
     if form_criar_conta.validate_on_submit() and 'botao_submit_criar_conta' in request.form:
