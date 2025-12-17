@@ -17,6 +17,7 @@ def contato():
     return render_template('contato.html')
 
 @app.route("/usuarios")
+@login_required
 def usuarios():
     return render_template('usuarios.html', lista_usuarios=lista_usuarios)
 
@@ -54,3 +55,21 @@ def login():
         return ( redirect(url_for('home')) )
     return render_template('login.html', form_login=form_login, form_criar_conta=form_criar_conta)
     
+@app.route('/sair')
+@login_required
+def sair():
+    logout_user()
+    flash(f'Logout Feito com Sucesso', 'alert-success')
+    return redirect(url_for('home'))
+
+
+@app.route('/perfil')
+@login_required
+def perfil():
+    return render_template('perfil.html')
+
+
+@app.route('/post/criar')  
+@login_required 
+def criar_post():
+    return render_template('criarpost.html')

@@ -19,6 +19,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
+## o login_view define qual função de rota vai ser chamada quando um usuário
+## tentar acessar uma rota protegida sem estar logado.
+## Observe que 'login' é o nome da função de rota definida em routes.py
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'alert-info'
 
 ## as rotas e modelos foram movidos para o pacote myposts
 ## precisam ser chamadas logo após a criação do app Flask

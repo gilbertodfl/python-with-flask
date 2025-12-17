@@ -125,3 +125,44 @@ class Post(database.Model):
     id_usuario = database.Column(database.Integer, database.ForeignKey('usuario.id'), nullable=False)
     
 ```
+
+## criptografando a senha
+
+pip install flask-bcrypt
+
+No __init__ coloque
+```
+from flask_bcrypt import Bcrypt
+bcrypt = Bcrypt(app)
+```
+No routes coloque bcrypt
+```
+from myposts import app, db, bcrypt
+```
+
+## login usando o flask
+
+pip install flask-login
+
+No __init__ coloque
+```
+from flask_login import LoginManager
+login_manager = LoginManager(app)
+```
+No routes coloque bcrypt
+```
+from myposts import app, db, bcrypt
+```
+
+#### O que o UserMixin faz?
+Ele adiciona automaticamente estes atributos e métodos ao seu modelo:
+```g
+is_authenticated - Retorna True se o usuário está autenticado
+is_active - Retorna True se a conta está ativa (esse era o erro!)
+is_anonymous - Retorna False para usuários regulares
+get_id() - Retorna o ID do usuário como string
+
+
+Veja o arquivo models.py que está usando p UserMixin
+
+```
