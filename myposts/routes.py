@@ -67,6 +67,9 @@ def sair():
     return redirect(url_for('home'))
 
 
+## pegamos um modelopronto em: https://freefrontend.com/bootstrap-profiles/
+## https://bbbootstrap.com/snippets/bootstrap-sidebar-user-profile-62301382
+
 @app.route('/perfil')
 @login_required
 def perfil():
