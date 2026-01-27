@@ -38,3 +38,8 @@ class FormLogin(FlaskForm):
     #         DataRequired(message='Por favor, preencha a senha.'),
     #         Length(min=6, max=20, message='A senha deve ter entre 6 e 20 caracteres.')
     #     ])
+
+class FormEditarPerfil(FlaskForm):
+    username = StringField('Nome de Usuário', validators=[DataRequired()])
+    email = StringField('E-mail', validators=[DataRequired(), Email()])
+    botao_submit_editarperfil = SubmitField('Confirmar Edição')

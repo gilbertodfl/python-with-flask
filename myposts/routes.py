@@ -1,6 +1,6 @@
 from flask import render_template, request, flash, redirect, url_for
 from myposts import app, db, bcrypt
-from myposts.forms import FormCriarConta, FormLogin
+from myposts.forms import FormCriarConta, FormLogin, FormCriarConta, FormEditarPerfil
 from myposts.models import Usuario, Post
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -76,6 +76,12 @@ def perfil():
     foto_perfil = url_for('static', filename='fotos_perfil/{}'.format(current_user.foto_perfil))
     return render_template('perfil.html', foto_perfil=foto_perfil)
 
+@app.route('/perfil/editar', methods=['GET', 'POST'])
+@login_required
+def editar_perfil():
+    form = FormEditarPerfil()
+    foto_perfil = url_for('static', filename='fotos_perfil/{}'.format(current_user.foto_perfil))
+    return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
 
 @app.route('/post/criar')  
 @login_required 
