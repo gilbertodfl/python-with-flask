@@ -80,6 +80,15 @@ def perfil():
 @login_required
 def editar_perfil():
     form = FormEditarPerfil()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash(f'Perfil atualizado com sucesso', 'alert-success')
+        return redirect(url_for('perfil'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
     foto_perfil = url_for('static', filename='fotos_perfil/{}'.format(current_user.foto_perfil))
     return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
 
