@@ -4,6 +4,9 @@ from myposts.forms import FormCriarConta, FormLogin, FormCriarConta, FormEditarP
 from myposts.models import Usuario, Post
 from flask_login import login_user, logout_user, current_user, login_required
 
+import secrets
+import os
+from PIL import Image
 
 #enquanto o banco não estiver em uso, vamos usar a lista fixa.
 lista_usuarios = [ 'gilberto', 'samuel', 'joão' ]
@@ -76,6 +79,19 @@ def perfil():
     foto_perfil = url_for('static', filename='fotos_perfil/{}'.format(current_user.foto_perfil))
     return render_template('perfil.html', foto_perfil=foto_perfil)
 
+def salvar_imagem(imagem):
+    codigo = secrets.token_hex(8)
+    nome, extensao = os.path.splitext(imagem.filename)
+    nome_arquivo = nome + codigo + extensao
+
+    caminho_completo = os.path.join(app.root_path, 'static/fotos_perfil', nome_arquivo)
+    tamanho = (200, 200)
+    imagem_reduzida = Image.open(imagem)
+    imagem_reduzida.thumbnail(tamanho)
+    imagem_reduzida.save(caminho_completo)
+    ## print(f'Nome do arquivo: {nome_arquivo} salvo com sucesso!')
+    return nome_arquivo
+
 @app.route('/perfil/editar', methods=['GET', 'POST'])
 @login_required
 def editar_perfil():
@@ -83,6 +99,10 @@ def editar_perfil():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.email.data
+        if form.foto_perfil.data:
+            nome_imagem = salvar_imagem(form.foto_perfil.data)
+            current_user.foto_perfil = nome_imagem
+
         db.session.commit()
         flash(f'Perfil atualizado com sucesso', 'alert-success')
         return redirect(url_for('perfil'))
