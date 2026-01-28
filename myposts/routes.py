@@ -91,6 +91,14 @@ def salvar_imagem(imagem):
     imagem_reduzida.save(caminho_completo)
     ## print(f'Nome do arquivo: {nome_arquivo} salvo com sucesso!')
     return nome_arquivo
+def atualizar_curso(form):
+    lista_curso = []
+    for campo in form:
+       if 'curso_' in campo.name:
+        if campo.data:
+            lista_curso.append(campo.label.text)
+    return ';'.join(lista_curso)
+    
 
 @app.route('/perfil/editar', methods=['GET', 'POST'])
 @login_required
@@ -102,7 +110,9 @@ def editar_perfil():
         if form.foto_perfil.data:
             nome_imagem = salvar_imagem(form.foto_perfil.data)
             current_user.foto_perfil = nome_imagem
-
+        current_user.curso = atualizar_curso(form)
+        if current_user.curso == '':
+            current_user.curso = 'Não informado'
         db.session.commit()
         flash(f'Perfil atualizado com sucesso', 'alert-success')
         return redirect(url_for('perfil'))
