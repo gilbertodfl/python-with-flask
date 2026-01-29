@@ -8,8 +8,7 @@ import secrets
 import os
 from PIL import Image
 
-#enquanto o banco não estiver em uso, vamos usar a lista fixa.
-lista_usuarios = [ 'gilberto', 'samuel', 'joão' ]
+
 
 @app.route("/")
 def home():
@@ -22,6 +21,7 @@ def contato():
 @app.route("/usuarios")
 @login_required
 def usuarios():
+    lista_usuarios = Usuario.query.all()
     return render_template('usuarios.html', lista_usuarios=lista_usuarios)
 
 ## Observe que por padrão o get é o método aceito por uma rota.
