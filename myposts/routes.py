@@ -1,7 +1,7 @@
 from flask import render_template, request, flash, redirect, url_for
 from myposts import app, db, bcrypt
-from myposts.forms import FormCriarConta, FormLogin, FormCriarConta, FormEditarPerfil
-from myposts.models import Usuario, Post
+from myposts.forms import FormCriarConta, FormLogin, FormCriarConta, FormEditarPerfil, FormCriarPost
+from myposts.models import Usuario, Post, database
 from flask_login import login_user, logout_user, current_user, login_required
 
 import secrets
@@ -122,7 +122,15 @@ def editar_perfil():
     foto_perfil = url_for('static', filename='fotos_perfil/{}'.format(current_user.foto_perfil))
     return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
 
-@app.route('/post/criar')  
+@app.route('/post/criar', methods=['GET', 'POST'])
 @login_required 
 def criar_post():
-    return render_template('criarpost.html')
+    form = FormCriarPost()
+    if form.validate_on_submit():
+        post = Post(titulo=form.titulo.data, corpo=form.corpo.data, autor=current_user)
+        database.session.add(post)
+        database.session.commit()
+        flash('Post criado!','alert-success')
+        return redirect(url_for('home'))
+
+    return render_template('criarpost.html', form=form)

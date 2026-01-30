@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from .models import Usuario
 from flask_login import current_user
@@ -59,3 +59,12 @@ class FormEditarPerfil(FlaskForm):
             usuario = Usuario.query.filter_by(email=email.data).first()
             if usuario:
                 raise ValidationError('Email já cadastrado. Utilize outro email.')
+
+
+class FormCriarPost(FlaskForm):
+    titulo= StringField('Título do Post', validators=[DataRequired(), Length(3,140)])
+    corpo = TextAreaField('Escreva seu post', validators=[DataRequired()])
+    botao_submit = SubmitField('Criar Post')
+
+
+    
