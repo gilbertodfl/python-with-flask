@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
+import os 
 ## https://flask-wtf.readthedocs.io/en/stable/
 
 ## https://flask.palletsprojects.com/en/stable/
@@ -13,7 +14,10 @@ from flask_login import LoginManager
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] ='84741a09e5e38f33ac7410686aa03a5d'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+if os.getenv('DATABASE_URL'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 ## create the SQLAlchemy db instance
 db = SQLAlchemy(app)

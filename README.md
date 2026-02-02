@@ -1,70 +1,68 @@
+## Criar ambiente virtual no linux
 
-
-# Criar ambiente virtual no linux
 python3 -m venv .venv
 
-# Ativar o ambiente
+## Ativar o ambiente
+
 source .venv/bin/activate
-
-
 
 ## RODAR O PROJETO:
 
 flask --app main.py --debug run
 
-
 ## criando formulários - flask-wtf
 
 ## https://flask-wtf.readthedocs.io/en/stable/
 
-flask_wtf: usado para criar formulários no python. 
-```
+flask\_wtf: usado para criar formulários no python.
+
+```plaintext
 pip instal flask-wtf
 
 ## é bom instalar, pois era para vir junto, mas não está vindo: 
 pip install email_validator
-
-
 ```
+
 O formulário envolve 3 arquivos basicamente:
 
 forms.py que tem as importações dos fields, regras e todos os campos - aqui é a classe
 
-main.py que importa o forms, cria a variável  e passa para o html- aqui instância. 
+main.py que importa o forms, cria a variável e passa para o html- aqui instância.
 
-templates/login.html que recebe a variável e usa no formulário. 
-
-
+templates/login.html que recebe a variável e usa no formulário.
 
 ## criando token - segurança
+
 vamos gerar um token na mão:
-```
+
+```plaintext
 python3
 Python 3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 13:27:36) [GCC 11.2.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
->>> import secrets
->>> secrets.token_hex(16)
+&gt;&gt;&gt; import secrets
+&gt;&gt;&gt; secrets.token_hex(16)
 '84741a09e5e38f33ac7410686aa03a5d'
->>> 
+&gt;&gt;&gt; 
 exit
 ```
+
 vamos colocar essa chave no main.py
 
 Como é ambiente de teste, não tem problema publicar aqui:
 
-```
+```plaintext
 app.config['SECRET_KEY'] ='84741a09e5e38f33ac7410686aa03a5d'
 
 Dentro de cada chamada em forms html, coloque a chave: 
    {{ form_login.csrf_token }}
-
 ```
+
 ## enviando mensagem para o usuário:
 
-A forma de mandar mensagem é assim:   flash(f'Login realizado com sucesso!{form_login.email.data}', 'alert-success')
-No entanto, veja o arquivo base.html que precisa dessa referência. 
+A forma de mandar mensagem é assim: flash(f'Login realizado com sucesso!{form\_login.email.data}', 'alert-success')  
+No entanto, veja o arquivo base.html que precisa dessa referência.
 
-```
+```plaintext
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form_login = FormLogin()
@@ -75,28 +73,35 @@ def login():
         return ( redirect(url_for('home')) )
     if form_criar_conta.validate_on_submit() and 'botao_submit_criar_conta' in request.form:
         flash(f'Conta criada com sucesso!{form_criar_conta.email.data}', 'alert-success')
-        
+
         ##print(f'Criar conta com o username: {form_criar_conta.username.data}, email: {form_criar_conta.email.data} e senha: {form_criar_conta.password.data}')
         return ( redirect(url_for('home')) )
     return render_template('login.html', form_login=form_login, form_criar_conta=form_criar_conta)
-```    
+```
+
 Para entender melhor leia o arquivo base.html
 
 ## criando database
-```
+
+```plaintext
 pip install flask-sqlalchemy
 ```
+
 no arquivo main.py inicialmente: vamos criar com o nome mydatabase.db
-```
+
+```plaintext
 from flask_sqlalchemy import SQLAlchemy
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'
 db = SQLAlchemy(app)
 ```
+
 ### como seria as tabelas?
+
 crie o arquivo models.py
-```
+
+```plaintext
 from main import database
 from datetime import datetime
 
@@ -117,26 +122,28 @@ class Post(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     titulo = database.Column(database.String, nullable=False)
     corpo = database.Column(database.Text, nullable=False)
-##  DEPRECATED -->  data_criacao = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
+##  DEPRECATED --&gt;  data_criacao = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
     data_criacao = database.Column(database.DateTime, nullable=False, default=datetime.now.utcnow)
 
     ## criando a chave estrangeira para o relacionamento com Usuario
     ## 'usuario.id' referencia a tabela Usuario e sua coluna id e TEM QUE SER MINUSCULO
     id_usuario = database.Column(database.Integer, database.ForeignKey('usuario.id'), nullable=False)
-    
 ```
 
 ## criptografando a senha
 
 pip install flask-bcrypt
 
-No __init__ coloque
-```
+No **init** coloque
+
+```plaintext
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 ```
+
 No routes coloque bcrypt
-```
+
+```plaintext
 from myposts import app, db, bcrypt
 ```
 
@@ -144,19 +151,50 @@ from myposts import app, db, bcrypt
 
 pip install flask-login
 
-No __init__ coloque
-```
+No **init** coloque
+
+```plaintext
 from flask_login import LoginManager
 login_manager = LoginManager(app)
 ```
+
 No routes coloque bcrypt
-```
+
+```plaintext
 from myposts import app, db, bcrypt
 ```
 
+#### videos de sugestão tutorial :  ‘
+
+#### ’
+
+https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog
+
+#### veja o fonte deste video sugestivo: [https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog](https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog)
+
+## GUNICOrn
+
+pip install gunicor
+
+crie o arquvio Procfile fazendo referência ao main.py do nosso projeto. 
+
+web: gunicorn main:app
+
+pip freeze : mostra tudo que está instalado. 
+
+vamos criar o arquivo requirements. txt a partide deste comando:
+
+pip freeze > requirements.txt
+
+### Usando o raiway.app
+
+[https://railway.com/](https://railway.com/)
+
 #### O que o UserMixin faz?
+
 Ele adiciona automaticamente estes atributos e métodos ao seu modelo:
-```g
+
+```plaintext
 is_authenticated - Retorna True se o usuário está autenticado
 is_active - Retorna True se a conta está ativa (esse era o erro!)
 is_anonymous - Retorna False para usuários regulares
@@ -164,5 +202,4 @@ get_id() - Retorna o ID do usuário como string
 
 
 Veja o arquivo models.py que está usando p UserMixin
-
 ```
