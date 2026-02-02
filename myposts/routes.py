@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, abort
 from myposts import app, db, bcrypt
 from myposts.forms import FormCriarConta, FormLogin, FormCriarConta, FormEditarPerfil, FormCriarPost
 from myposts.models import Usuario, Post, database
