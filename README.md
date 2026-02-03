@@ -186,6 +186,11 @@ vamos criar o arquivo requirements. txt a partide deste comando:
 
 pip freeze > requirements.txt
 
+Postgresql:
+
+pip install psycopg2   
+ 
+
 ### Usando o raiway.app
 
 [https://railway.com/](https://railway.com/)
