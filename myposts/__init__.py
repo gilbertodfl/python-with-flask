@@ -5,6 +5,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+import sqlalchemy
 
 import os 
 ## https://flask-wtf.readthedocs.io/en/stable/
@@ -28,6 +29,20 @@ login_manager = LoginManager(app)
 ## Observe que 'login' é o nome da função de rota definida em routes.py
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'alert-info'
+
+#criando o engine para o banco de dados
+from myposts import models
+
+engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+inspector = sqlalchemy.inspect(engine)
+if not inspector.has_table('usuario'):
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+        print("Tabelas criadas!")
+else:
+    print("Tabelas já existem!")
+###########################################
 
 ## as rotas e modelos foram movidos para o pacote myposts
 ## precisam ser chamadas logo após a criação do app Flask
