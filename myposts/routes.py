@@ -13,8 +13,6 @@ import secrets
 import os
 from PIL import Image
 
-
-
 @app.route("/")
 def home():
     posts = Post.query.order_by(Post.id.desc())
