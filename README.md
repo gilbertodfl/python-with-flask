@@ -4,7 +4,7 @@ python3 -m venv .venv
 
 ## Ativar o ambiente
 
-source .venv/bin/activateorm\_login.csrf\_token
+source .venv/bin/activate
 
 ## RODAR O PROJETO:
 
@@ -48,18 +48,18 @@ with app.app_context():
 #### GERANDO UMA SECRET NA MÃO
 
 ```plaintext
-&gt;&gt;&gt; from flask_bcrypt import Bcrypt
-&gt;&gt;&gt; bcrypt = Bcrypt()
+>>> from flask_bcrypt import Bcrypt
+>>> bcrypt = Bcrypt()
 ## criando um teste
-&gt;&gt;&gt; bcrypt.generate_password_hash('testing')
+>>> bcrypt.generate_password_hash('testing')
 b'$2b$12$0QhRjkkSPl8eOHAfXcK1KOSukxM3mCXcmdJwta8LN9STHL9d9./2q'
 ## armazenando numa variável
-&gt;&gt;&gt; hashed_pw = bcrypt.generate_password_hash('testing')
+>>> hashed_pw = bcrypt.generate_password_hash('testing')
 ## testando se é válido
-&gt;&gt;&gt; bcrypt.check_password_hash(hashed_pw,'testing')
+>>> bcrypt.check_password_hash(hashed_pw,'testing')
 True
 ## testando para dar False
-&gt;&gt;&gt; bcrypt.check_password_hash(hashed_pw,'testinxxx')
+>>> bcrypt.check_password_hash(hashed_pw,'testinxxx')
 False
 ```
 
