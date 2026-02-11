@@ -4,9 +4,11 @@ python3 -m venv .venv
 
 ## Ativar o ambiente
 
-source .venv/bin/activate
+source .venv/bin/activateorm\_login.csrf\_token
 
 ## RODAR O PROJETO:
+
+cd posts
 
 flask --app main.py --debug run
 
@@ -23,6 +25,8 @@ pip instal flask-wtf
 pip install email_validator
 ```
 
+### como funciona o flask-wtf?
+
 O formulário envolve 3 arquivos basicamente:
 
 forms.py que tem as importações dos fields, regras e todos os campos - aqui é a classe
@@ -30,6 +34,34 @@ forms.py que tem as importações dos fields, regras e todos os campos - aqui é
 main.py que importa o forms, cria a variável e passa para o html- aqui instância.
 
 templates/login.html que recebe a variável e usa no formulário.
+
+## Povoando as tabelas
+
+Caso queira, altere os registros antes de dar a carga. 
+
+```plaintext
+## rode no comando de linha:
+python createdb_insert.py
+with app.app_context():
+```
+
+#### GERANDO UMA SECRET NA MÃO
+
+```plaintext
+&gt;&gt;&gt; from flask_bcrypt import Bcrypt
+&gt;&gt;&gt; bcrypt = Bcrypt()
+## criando um teste
+&gt;&gt;&gt; bcrypt.generate_password_hash('testing')
+b'$2b$12$0QhRjkkSPl8eOHAfXcK1KOSukxM3mCXcmdJwta8LN9STHL9d9./2q'
+## armazenando numa variável
+&gt;&gt;&gt; hashed_pw = bcrypt.generate_password_hash('testing')
+## testando se é válido
+&gt;&gt;&gt; bcrypt.check_password_hash(hashed_pw,'testing')
+True
+## testando para dar False
+&gt;&gt;&gt; bcrypt.check_password_hash(hashed_pw,'testinxxx')
+False
+```
 
 ## criando token - segurança
 
@@ -39,10 +71,9 @@ vamos gerar um token na mão:
 python3
 Python 3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 13:27:36) [GCC 11.2.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
-&gt;&gt;&gt; import secrets
-&gt;&gt;&gt; secrets.token_hex(16)
+import secrets
+secrets.token_hex(16)
 '84741a09e5e38f33ac7410686aa03a5d'
-&gt;&gt;&gt; 
 exit
 ```
 
@@ -57,7 +88,7 @@ Dentro de cada chamada em forms html, coloque a chave:
    {{ form_login.csrf_token }}
 ```
 
-## enviando mensagem para o usuário:
+## enviando mensagem para o usuário - flash:
 
 A forma de mandar mensagem é assim: flash(f'Login realizado com sucesso!{form\_login.email.data}', 'alert-success')  
 No entanto, veja o arquivo base.html que precisa dessa referência.
@@ -97,7 +128,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'
 db = SQLAlchemy(app)
 ```
 
-### como seria as tabelas?
+### Como criar as tabelas?
 
 crie o arquivo models.py
 
@@ -117,7 +148,6 @@ class Usuario(database.Model):
     posts = database.relationship('Post', backref='autor', lazy=True)
 
 
-
 class Post(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     titulo = database.Column(database.String, nullable=False)
@@ -130,7 +160,7 @@ class Post(database.Model):
     id_usuario = database.Column(database.Integer, database.ForeignKey('usuario.id'), nullable=False)
 ```
 
-## criptografando a senha
+## Criptografando a senha
 
 pip install flask-bcrypt
 
@@ -147,7 +177,7 @@ No routes coloque bcrypt
 from myposts import app, db, bcrypt
 ```
 
-## login usando o flask
+## login usando o flask-login
 
 pip install flask-login
 
@@ -164,23 +194,23 @@ No routes coloque bcrypt
 from myposts import app, db, bcrypt
 ```
 
-#### videos de sugestão tutorial :  ‘
+#### videos de sugestão tutorial :  
 
-#### ’
-
-https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog
+#### [https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog](https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog)
 
 #### veja o fonte deste video sugestivo: [https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog](https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog)
 
-## GUNICOrn
+## GUNICORN
 
-pip install gunicor
+É necessário ter o gunicor para publicar no rayway.app e heroko. 
+
+**pip install gunicor**
 
 crie o arquvio Procfile fazendo referência ao main.py do nosso projeto. 
 
-web: gunicorn main:app
+**web: gunicorn main:app**
 
-pip freeze : mostra tudo que está instalado. 
+**mostra tudo que está instalado:** pip freeze 
 
 vamos criar o arquivo requirements. txt a partide deste comando:
 
@@ -188,8 +218,7 @@ pip freeze > requirements.txt
 
 Postgresql:
 
-pip install psycopg2   
- 
+pip install psycopg2   
 
 ### Usando o raiway.app
 
@@ -197,7 +226,9 @@ pip install psycopg2 
 
 #### O que o UserMixin faz?
 
-Ele adiciona automaticamente estes atributos e métodos ao seu modelo:
+O `UserMixin` é uma classe auxiliar fornecida pelo Flask-Login que implementa métodos padrão necessários para gerenciar usuários em sistemas de autenticação.
+
+Quando você adiciona `UserMixin` à sua classe de usuário (geralmente herdando dela),
 
 ```plaintext
 is_authenticated - Retorna True se o usuário está autenticado

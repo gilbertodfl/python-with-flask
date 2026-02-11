@@ -1,5 +1,10 @@
 from flask import render_template, request, flash, redirect, url_for, abort
+#########################################################
+## Ao importar de mypost ( pasta da aplicação) o app, db, bcrypt do __init__.py, o Flask automaticamente carrega o contexto da aplicação.
+## Isso significa que você pode usar o app,db e bcrypt para fazer consultas e alterações no banco de dados sem precisar de um contexto explícito.
 from myposts import app, db, bcrypt
+#########################################################
+
 from myposts.forms import FormCriarConta, FormLogin, FormCriarConta, FormEditarPerfil, FormCriarPost
 from myposts.models import Usuario, Post, database
 from flask_login import login_user, logout_user, current_user, login_required
@@ -61,11 +66,17 @@ def login():
         
         ##print(f'Criar conta com o username: {form_criar_conta.username.data}, email: {form_criar_conta.email.data} e senha: {form_criar_conta.password.data}')
         return ( redirect(url_for('home')) )
+
+    ## esse return ocorre quando o usuário acessa a página de login pela primeira vez 
+    ## ou quando ocorre um erro de validação.
+    ## ou seja, o usuário acessa a página de login e não preenche os campos corretamente.
+    ## ou quando acessa direto pelo link da página de login.
     return render_template('login.html', form_login=form_login, form_criar_conta=form_criar_conta)
     
 @app.route('/sair')
 @login_required
 def sair():
+    ## a função logout_user vem do flask_login e vai deslogar o usuário da sessão.
     logout_user()
     flash(f'Logout Feito com Sucesso', 'alert-success')
     return redirect(url_for('home'))
