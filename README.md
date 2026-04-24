@@ -1,3 +1,9 @@
+# Projeto em flask
+
+Objetivo: abordar as principais funcionalidades do flask, usando o sqlite como banco de dados.
+No caso vamos criar login e permitir criar post. 
+O usuário só pode alterar e apagar seus posts. Todos podem ver todos os posts. 
+
 ## Criar ambiente virtual no linux
 
 python3 -m venv .venv
@@ -8,10 +14,21 @@ source .venv/bin/activate
 
 ## RODAR O PROJETO:
 
+Baixe o projeto e descompacte
+
+```
 cd post-user
 
+##1)opção 1:
 flask --app main.py --debug run
+ * Serving Flask app 'hello'
+ * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+###2)opção 2:
+   python main.py
 
+```
+
+Esse é a url de trabalho do flask:
 http://127.0.0.1:5000
 
 
