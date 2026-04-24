@@ -8,15 +8,18 @@ source .venv/bin/activate
 
 ## RODAR O PROJETO:
 
-cd posts
+cd post-user
 
 flask --app main.py --debug run
+
+http://127.0.0.1:5000
+
 
 ## criando formulários - flask-wtf
 
 ## https://flask-wtf.readthedocs.io/en/stable/
 
-flask\_wtf: usado para criar formulários no python.
+flask_wtf: usado para criar formulários no python.
 
 ```plaintext
 pip instal flask-wtf
@@ -27,13 +30,30 @@ pip install email_validator
 
 ### como funciona o flask-wtf?
 
-O formulário envolve 3 arquivos basicamente:
+O formulário envolve 4 arquivos basicamente:
 
-forms.py que tem as importações dos fields, regras e todos os campos - aqui é a classe
+`forms.py` que tem as importações dos fields, regras e todos os campos - aqui é a classe (FlaskForm)
 
-main.py que importa o forms, cria a variável e passa para o html- aqui instância.
+`main.py` que importa o forms, cria a variável e passa para o html- aqui instância. 
 
-templates/login.html que recebe a variável e usa no formulário.
+        Veja o import:
+                `from myposts import app`
+
+`templates/login.html` que recebe a variável e usa no formulário --> Jinja
+
+### Outros arquivos importantes
+`models.py` Faz a parte de banco de dados. Define as tabelas e colunas. 
+`routes.py` Tem os direcionamentos de urls. 
+
+O arquivo routes.py é quem faz a fusão do modelo, html e a rota
+```
+    from myposts.forms import FormCriarConta, FormLogin, FormCriarConta, 
+    FormEditarPerfil, FormCriarPost
+    from myposts.models import Usuario, Post, database
+```
+
+
+Jinja (especificamente Jinja2) é um motor de templates (template engine) rápido, flexível e seguro para Python, usado principalmente para gerar HTML dinâmico em aplicações web
 
 ## Povoando as tabelas
 

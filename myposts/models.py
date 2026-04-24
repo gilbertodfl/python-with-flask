@@ -1,7 +1,5 @@
 from myposts import db as database, login_manager
 from flask_login import UserMixin
-#from __init__ import db as database
-#from . import db as database
 from datetime import datetime
 
 @login_manager.user_loader
