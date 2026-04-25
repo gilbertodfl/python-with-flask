@@ -31,6 +31,11 @@ flask --app main.py --debug run
 Esse é a url de trabalho do flask:
 http://127.0.0.1:5000
 
+## veja se tem o arquivo .env
+pip install python-dotenv
+e crie seu .env
+SECRET_KEY=84741a09e5e38f33ac7410686aa03a5d
+DATABASE_URL=sqlite:///instance/site.db
 
 ## criando formulários - flask-wtf
 

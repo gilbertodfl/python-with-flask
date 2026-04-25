@@ -1,0 +1,2 @@
+SECRET_KEY=84741a09e5e38f33ac7410686aa03a5d
+DATABASE_URL=sqlite:///instance/site.db
