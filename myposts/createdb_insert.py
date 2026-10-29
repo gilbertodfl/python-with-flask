@@ -4,14 +4,20 @@ import os
 # Adiciona o diretório atual ao path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from __init__ import app, db
-from models import Usuario
+from myposts import app, db
+from myposts.models import Usuario, Post
 
+## MODO DE USO:
+##  rode no comando de linha: 
+##  garanta que está onde está o main.py
+##  cd /home/gilberto/APRENDIZADO/HASHTAG/python impressionador/FLASK/flask-post-user/post-user
+##  python -m myposts.createdb_insert
+## aqui ficou como exemplo, mas veja que em __init__.py já estamos criando e abrindo. 
 
-## rode no comando de linha: python createdb_insert.py
 with app.app_context():
     # Criar tabelas. Se existir, NÃO SOBREPÕE!!.
-    ## se precisar recriar, apage o arquivo com comando : rm instance/site.db        
+    ## se precisar recriar, apague o arquivo com comando : rm instance/site.db        
+    ## ou também poderia ter uma instrução antes do create_all: db.drop_all()
     db.create_all()
     print("Tabelas criadas!")
     
@@ -50,3 +56,8 @@ with app.app_context():
         print(f'Usuário encontrado: ID: {usuario_especifico.id}, Username: {usuario_especifico.username}, Email: {usuario_especifico.email}')
     else:
         print('Usuário não encontrado ou senha incorreta')        
+with app.app_context():
+    posts=Post.query.first()
+    print ("Buscando o primeiro post no banco de dados")
+    if posts:
+        print(f'Post encontrado: ID: {posts.id}, Título: {posts.titulo}, Corpo: {posts.corpo}, Data de Criação: {posts.data_criacao}, ID do Usuário: {posts.id_usuario}')   

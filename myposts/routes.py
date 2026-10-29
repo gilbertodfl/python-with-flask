@@ -43,6 +43,7 @@ def login():
             login_user(usuario, remember=form_login.remember_me.data)
             flash(f'Login realizado com sucesso!{form_login.email.data}', 'alert-success')
             ##print(f'Login com o email: {form_login.email.data} e senha: {form_login.password.data} e lembrar de mim: {form_login.remember_me.data}')
+            ## o parametro par_next nos permite saber qual a url que o usuário deseja ir, após o login.
             par_next = request.args.get('next')
             if par_next:
                 return ( redirect(par_next) )

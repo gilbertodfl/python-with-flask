@@ -1,10 +1,19 @@
-# Projeto em flask
+# Projeto em flask - monolitico
 
 Objetivo: abordar as principais funcionalidades do flask, usando o sqlite como banco de dados.
 No caso vamos criar login e permitir criar post. 
 O usuário só pode alterar e apagar seus posts. Todos podem ver todos os posts. 
 
+Resumo dos arquivos e pastas: 
+
+    main.py: inicia o servidor Flask.
+    myposts/__init__.py: configura a aplicação, banco de dados, autenticação e senha.
+    myposts/routes.py: define as rotas e processa requisições (/login, /usuarios, criação/edição de posts etc.).
+    myposts/models.py: define os dados e tabelas do banco (Usuario e Post).
 ## Criar ambiente virtual no linux
+
+VEJA MAIS DETALHES EM : https://flask.palletsprojects.com/en/stable/installation/
+
 
 python3 -m venv .venv
 
@@ -262,9 +271,6 @@ Postgresql:
 
 pip install psycopg2   
 
-### Usando o raiway.app
-
-[https://railway.com/](https://railway.com/)
 
 #### O que o UserMixin faz?
 
@@ -281,3 +287,55 @@ get_id() - Retorna o ID do usuário como string
 
 Veja o arquivo models.py que está usando p UserMixin
 ```
+
+## comentário sobre pastas
+
+    - static:  aqui colocamos os arquivos estátitocs e css. Veja que temos main.css
+    - templates: é onde colocamos os htmls
+    - instance: onde está o banco de dados. No nosso caso sqlight
+    - main.py é onde começa tudo. Este chama myposts que contém __init__.py
+
+
+# Usando o raiway.app
+
+[https://railway.com/](https://railway.com/)
+
+## Como é o processo de deploy. 
+
+Precisamos seguir os seguintes passos
+
+
+### Crie o arquivo Procfile
+> pip install gunicorn
+
+Crie o arquivo onde está o main.py
+
+Procfile:
+>web: gunicorn main:app
+
+### Crie o arquivo requirements.txt
+
+pip freeze > requirements.txt
+
+### Crie uma conta no railway
+
+Dê preferencia já para vincular com o github
+
+## banco de dados postgresql 
+No railway provisione-se um banco POSTGRESQL
+Pegue nele, na aba conection o caminho. 
+
+Modifique no __init__ a variavél DATABASE_URL. Nosso projeto já está configurado para ambas situações. 
+
+OBSERVAÇÃO: nosso projeto precisamos instalar o psycopg2 para acessar o postgresql 
+```bash
+pip install psycop2
+pip freeze > requirements.txt 
+##atualize no github: 
+git add . 
+git commit -m ' install psycop2'
+git push 
+```
+Assim que fizer o push, ele já dispara o deploy. 
+
+### Crie uma conta se não possui no github

@@ -25,7 +25,7 @@ class Post(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     titulo = database.Column(database.String, nullable=False)
     corpo = database.Column(database.Text, nullable=False)
-##  DEPRECATED -->  data_criacao = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
+    ##  DEPRECATED -->  data_criacao = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
     data_criacao = database.Column(database.DateTime, nullable=False, default=datetime.now)
 
     ## criando a chave estrangeira para o relacionamento com Usuario
